@@ -1,5 +1,5 @@
 import './style.css';
-import { ToDoItemArr, submitNewTaskBtn } from './ToDoItemLogic';
+import { ToDoItemArr, sortItemsByDueDate, submitNewTaskBtn } from './ToDoItemLogic';
 
 const contentContainer = document.getElementById('content');
 

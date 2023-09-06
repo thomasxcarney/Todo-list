@@ -8,6 +8,14 @@ function PushItemToArr(item){
     ToDoItemArr.push(item)
 };
 
+function sortItemsByDueDate() {
+    ToDoItemArr.sort((a,b) => {
+    if (a.dueDate > b.dueDate) return 1
+    if (a.dueDate < b.dueDate) return -1
+    return 0
+    })
+};
+
 const item1 = ToDoItem('title', 'description', '9/11', 'high priority');
 PushItemToArr(item1);
 
@@ -38,6 +46,7 @@ submitNewTaskBtn.addEventListener('click', event => {
     clearInputs();
     newTaskDialog.close();
     PushItemToArr(newTask);
+    sortItemsByDueDate();
 });
 
 const closeNewTaskDialogBtn = document.getElementById('closeNewTaskDialogBtn');
@@ -48,4 +57,4 @@ closeNewTaskDialogBtn.addEventListener('click', event => {
     newTaskDialog.close();
 });
 
-export { ToDoItemArr, submitNewTaskBtn }
+export { ToDoItemArr, submitNewTaskBtn, sortItemsByDueDate }
