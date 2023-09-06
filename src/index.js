@@ -1,5 +1,5 @@
 import './style.css';
-import { ToDoItemArr } from './ToDoItemLogic';
+import { ToDoItemArr, submitNewTaskBtn } from './ToDoItemLogic';
 
 const contentContainer = document.getElementById('content');
 
@@ -23,5 +23,14 @@ function CreateToDoItemCard(item){
     container.append(title, description, dueDate, priority);
     return container;
 };
+
+function clearItems() {
+    contentContainer.innerHTML = ''
+};
+
+submitNewTaskBtn.addEventListener('click', () => {
+    clearItems();
+    PopulateList();
+});
 
 PopulateList();

@@ -9,7 +9,29 @@
 <body>
     <div class='header'>
         <h1>My To Do List</h1>
+        <button id="NewTaskBtn">Add a Task</button>
     </div>
+    <dialog id="newTaskDialog">
+        <form method="dialog">
+            <label for="titleInput">Title</label>
+            <input id='titleInput' name='titleInput' type="text" />
+            <label for="desInput">Description</label>
+            <input id='desInput' name='desInput' type="text" />
+            <label for="dueInput">Due Date</label>
+            <input id='dueInput' name='dueInput' type="datetime-local" />
+            <fieldset>
+                <legend>Select a priority level</legend>
+                <label for="low">Low</label>
+                <input type="radio" id="low" name="priority" value="low priority" />
+                <label for="normal">Normal</label>
+                <input type="radio" id="normal" name="priority" value="normal priority" checked />
+                <label for="high">High</label>
+                <input type="radio" id="high" name="priority" value="high priority" />
+            </fieldset>
+        </form>
+        <button type="button" id="closeNewTaskDialogBtn">Cancel</button>
+        <button type="submit" id="submitNewTask">Submit</button>
+    </dialog>
     <div id='content' class='content'>
 
     </div>  
