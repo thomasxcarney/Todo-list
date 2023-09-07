@@ -31,12 +31,31 @@ function CreateToDoItemCard(item){
     expandedContainer.append(description, deleteBtn, PriorityBtn);
     expandedContainer.classList.add('hidden');
     container.append(title, detailsBtn, dueDate, priority, expandedContainer);
-    detailsBtn.addEventListener('click', () => {
-        if(expandedContainer.classList.contains('hidden')){
-            expandedContainer.classList.remove('hidden');
-        } else expandedContainer.classList.add('hidden');
-    })
+    addExpandEventListener(detailsBtn, expandedContainer);
+    addDeleteEventListener(deleteBtn, item);
     return container;
+};
+
+function addExpandEventListener(btn, container) {
+    btn.addEventListener('click', () => {
+        if(container.classList.contains('hidden')){
+            container.classList.remove('hidden');
+        } else container.classList.add('hidden');
+    })
+};
+
+function removeItem(item) {
+    let index = ToDoItemArr.indexOf(item);
+    console.log(index)
+    ToDoItemArr.splice(index, 1);
+    clearItems();
+    PopulateList();
+};
+
+function addDeleteEventListener(btn, item){
+    btn.addEventListener('click', () => {
+        removeItem(item)
+    })
 };
 
 function clearItems() {

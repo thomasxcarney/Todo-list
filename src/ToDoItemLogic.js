@@ -16,7 +16,7 @@ function sortItemsByDueDate() {
     })
 };
 
-const item1 = ToDoItem('title', 'description', '9/11', 'high priority');
+const item1 = ToDoItem('Go to work', 'I have to go to work :(', '2023-09-07T17:12', 'high priority');
 PushItemToArr(item1);
 
 const NewTaskBtn = document.getElementById('NewTaskBtn');
