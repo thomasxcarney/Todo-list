@@ -14,13 +14,28 @@ function CreateToDoItemCard(item){
     container.classList.add('to-do-item');
     let title = document.createElement('h4');
     title.innerHTML = item.title;
-    let description = document.createElement('p');
-    description.innerHTML = item.description;
     let dueDate = document.createElement('p');
     dueDate.innerHTML = item.dueDate;
     let priority = document.createElement('p');
     priority.innerHTML = item.priority;
-    container.append(title, description, dueDate, priority);
+    let detailsBtn = document.createElement('button');
+    detailsBtn.innerHTML = 'Details';
+    detailsBtn.classList.add('expand');
+    let expandedContainer = document.createElement('div');
+    let description = document.createElement('p');
+    description.innerHTML = item.description;
+    let deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML = 'Remove item';
+    let PriorityBtn = document.createElement('button');
+    PriorityBtn.innerHTML = 'Change priority';
+    expandedContainer.append(description, deleteBtn, PriorityBtn);
+    expandedContainer.classList.add('hidden');
+    container.append(title, detailsBtn, dueDate, priority, expandedContainer);
+    detailsBtn.addEventListener('click', () => {
+        if(expandedContainer.classList.contains('hidden')){
+            expandedContainer.classList.remove('hidden');
+        } else expandedContainer.classList.add('hidden');
+    })
     return container;
 };
 
