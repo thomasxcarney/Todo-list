@@ -57,5 +57,4 @@ closeNewTaskDialogBtn.addEventListener('click', event => {
     newTaskDialog.close();
 });
 
-
 export { ToDoItemArr, submitNewTaskBtn, sortItemsByDueDate }

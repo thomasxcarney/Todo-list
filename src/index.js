@@ -1,5 +1,5 @@
 import './style.css';
-import { ToDoItemArr, sortItemsByDueDate, submitNewTaskBtn } from './ToDoItemLogic';
+import { ToDoItemArr, sortItemsByDueDate, submitNewTaskBtn, editBtn } from './ToDoItemLogic';
 
 const contentContainer = document.getElementById('content');
 
@@ -26,13 +26,14 @@ function CreateToDoItemCard(item){
     description.innerHTML = item.description;
     let deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = 'Remove item';
-    let PriorityBtn = document.createElement('button');
-    PriorityBtn.innerHTML = 'Change priority';
-    expandedContainer.append(description, deleteBtn, PriorityBtn);
+    let editBtn = document.createElement('button');
+    editBtn.innerHTML = 'Edit';
+    expandedContainer.append(description, deleteBtn, editBtn);
     expandedContainer.classList.add('hidden');
     container.append(title, detailsBtn, dueDate, priority, expandedContainer);
     addExpandEventListener(detailsBtn, expandedContainer);
     addDeleteEventListener(deleteBtn, item);
+    editBtnEventListener(editBtn, item);
     return container;
 };
 
@@ -46,7 +47,6 @@ function addExpandEventListener(btn, container) {
 
 function removeItem(item) {
     let index = ToDoItemArr.indexOf(item);
-    console.log(index)
     ToDoItemArr.splice(index, 1);
     clearItems();
     PopulateList();
@@ -66,5 +66,34 @@ submitNewTaskBtn.addEventListener('click', () => {
     clearItems();
     PopulateList();
 });
+
+const editDialog = document.getElementById('editDialog');
+
+function fillEditDialog(item){
+    const titleInput = document.getElementById('editTitleInput');
+    const descriptionInput = document.getElementById('editDesInput');
+    const dueInput = document.getElementById('editDueInput');
+    const lowPrioritySelect = document.getElementById('editLow');
+    const normalPrioritySelect = document.getElementById('editNormal');
+    const highPrioritySelect = document.getElementById('editHigh');
+    titleInput.value = item.title;
+    descriptionInput.value = item.description;
+    dueInput.value = item.dueDate;
+    const itemPriority = (item.priority).toLowerCase();
+    if(itemPriority == highPrioritySelect.value){
+        highPrioritySelect.checked = true;
+    } else if(itemPriority == normalPrioritySelect.value){
+        normalPrioritySelect.checked = true;
+    } else if(itemPriority == lowPrioritySelect.value){
+        lowPrioritySelect.checked = true;
+    };
+}
+
+function editBtnEventListener(btn, item){
+    btn.addEventListener('click', () => {
+        fillEditDialog(item);
+        editDialog.showModal();
+    })
+}
 
 PopulateList();
