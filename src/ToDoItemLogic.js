@@ -1,9 +1,9 @@
-import { clearItems, PopulateList } from ".";
+import { clearItems, createNewCategory, PopulateList } from ".";
 
 const ToDoItemArr = [];
 
-const ToDoItem = (title, description, dueDate, priority) => {
-    return { title, description, dueDate, priority }
+const ToDoItem = (title, description, dueDate, priority, category) => {
+    return { title, description, dueDate, priority, category }
 };
 
 function PushItemToArr(item){
@@ -18,7 +18,7 @@ function sortItemsByDueDate() {
     })
 };
 
-const item1 = ToDoItem('Go to work', 'I have to go to work :(', '2023-09-07T17:12', 'high priority');
+const item1 = ToDoItem('Go to work', 'I have to go to work :(', '2023-09-07T17:12', 'high priority', 'work');
 PushItemToArr(item1);
 
 const NewTaskBtn = document.getElementById('NewTaskBtn');
@@ -45,7 +45,9 @@ submitNewTaskBtn.addEventListener('click', event => {
     let title = document.querySelector('input[name="titleInput"]').value;
     let description = document.querySelector('input[name="desInput"]').value;
     let dueDate = document.querySelector('input[name="dueInput"]').value;
-    let newTask = ToDoItem(title, description, dueDate, priority);
+    let category = document.querySelector('input[name="category"]').value;
+    let newTask = ToDoItem(title, description, dueDate, priority, category);
+    createNewCategory(category)
     clearInputs();
     newTaskDialog.close();
     PushItemToArr(newTask);
@@ -67,6 +69,7 @@ function getEditInputs() {
     let title = document.getElementById('editTitleInput').value;
     let description = document.getElementById('editDesInput').value;
     let dueDate = document.getElementById('editDueInput').value;
+    let category = document.getElementById('editCategory').value;
     let priority;
     if(document.getElementById('editHigh').checked == true){
         priority = 'High priority';
@@ -75,7 +78,7 @@ function getEditInputs() {
     }else if(document.getElementById('editLow').checked == true) {
         priority = 'Low priority';
     };
-    return [title, description, dueDate, priority];
+    return [title, description, dueDate, priority, category];
 }
 
 function editItem(item, inputs){
@@ -83,6 +86,7 @@ function editItem(item, inputs){
     item.description = inputs[1];
     item.dueDate = inputs[2];
     item.priority = inputs[3];
+    item.category = inputs[4];
 }
 
 const closeNewTaskDialogBtn = document.getElementById('closeNewTaskDialogBtn');

@@ -24,11 +24,13 @@ function CreateToDoItemCard(item){
     let expandedContainer = document.createElement('div');
     let description = document.createElement('p');
     description.innerHTML = item.description;
+    let category = document.createElement('p');
+    category.innerHTML = item.category;
     let deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = 'Remove item';
     let editBtn = document.createElement('button');
     editBtn.innerHTML = 'Edit';
-    expandedContainer.append(description, deleteBtn, editBtn);
+    expandedContainer.append(description, category, deleteBtn, editBtn);
     expandedContainer.classList.add('hidden');
     container.append(title, detailsBtn, dueDate, priority, expandedContainer);
     addExpandEventListener(detailsBtn, expandedContainer);
@@ -97,6 +99,56 @@ function editBtnEventListener(btn, item){
     })
 }
 
+const categories = document.getElementsByClassName('category');
+const homeBtn = document.getElementById('homeBtn');
+
+homeBtn.addEventListener('click', event => {
+    clearItems();
+    PopulateList();
+})
+
+function addCategoryEventListeners(){
+    for(let i = 0; i < categories.length; i++){
+        categories[i].addEventListener('click', event => {
+            let category = categories[i].classList[0];
+            clearItems();
+            populateCategoryView(category);
+        })
+    }
+};
+
+function populateCategoryView(category){
+    for(let i = 0; i < ToDoItemArr.length; i++){
+        if(ToDoItemArr[i].category.toLowerCase() == category){
+            contentContainer.appendChild(CreateToDoItemCard(ToDoItemArr[i]));
+        };
+    };
+};
+
+const editDialogCategories = document.getElementById('editCategory');
+const newDialogCategories = document.getElementById('category');
+const sidebar = document.getElementById('sidebar');
+
+function newCategoryHTML(newCategory){
+    editDialogCategories.innerHTML += newCategory;
+    newDialogCategories.innerHTML += newCategory;
+    let newSidebarElement = document.createElement('h4');
+    newSidebarElement.innerHTML = newCategory;
+    newSidebarElement.classList.add(newCategory);
+    newSidebarElement.classList.add('category');
+    sidebar.appendChild(newSidebarElement);
+};
+
+function createNewCategory(newCategory){
+    if(Object.hasOwn(categories, newCategory) == false){
+        newCategoryHTML(newCategory);
+        addCategoryEventListeners();
+    };
+};
+
+console.log(typeof categories);
+
+addCategoryEventListeners();
 PopulateList();
 
-export { clearItems, PopulateList }
+export { clearItems, PopulateList, createNewCategory }

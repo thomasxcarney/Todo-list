@@ -50,3 +50,8 @@ body {
     display: none;
     visibility: hidden;
 }
+
+.category, 
+#homeBtn {
+    cursor: pointer;
+}
