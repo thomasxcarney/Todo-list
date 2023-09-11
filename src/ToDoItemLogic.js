@@ -1,3 +1,5 @@
+import { clearItems, PopulateList } from ".";
+
 const ToDoItemArr = [];
 
 const ToDoItem = (title, description, dueDate, priority) => {
@@ -34,6 +36,7 @@ function clearInputs() {
 };
 
 const submitNewTaskBtn = document.getElementById('submitNewTask');
+const submitEditTaskBtn = document.getElementById('submitEditBtn');
 
 submitNewTaskBtn.addEventListener('click', event => {
     event.preventDefault();
@@ -49,12 +52,52 @@ submitNewTaskBtn.addEventListener('click', event => {
     sortItemsByDueDate();
 });
 
+function addEditSubmitBtnListener(item){
+    submitEditTaskBtn.addEventListener('click', event => {
+        event.preventDefault();
+        let inputs = getEditInputs();
+        editItem(item, inputs);
+        editDialog.close();
+        clearItems();
+        PopulateList();
+    })
+};
+
+function getEditInputs() {
+    let title = document.getElementById('editTitleInput').value;
+    let description = document.getElementById('editDesInput').value;
+    let dueDate = document.getElementById('editDueInput').value;
+    let priority;
+    if(document.getElementById('editHigh').checked == true){
+        priority = 'High priority';
+    }else if(document.getElementById('editNormal').checked == true) {
+        priority = 'Normal priority';
+    }else if(document.getElementById('editLow').checked == true) {
+        priority = 'Low priority';
+    };
+    return [title, description, dueDate, priority];
+}
+
+function editItem(item, inputs){
+    item.title = inputs[0];
+    item.description = inputs[1];
+    item.dueDate = inputs[2];
+    item.priority = inputs[3];
+}
+
 const closeNewTaskDialogBtn = document.getElementById('closeNewTaskDialogBtn');
+const closeEditDialogBtn = document.getElementById('closeEditDialogBtn');
+const editDialog = document.getElementById('editDialog');
 
-closeNewTaskDialogBtn.addEventListener('click', event => {
-    event.preventDefault();
-    clearInputs();
-    newTaskDialog.close();
-});
+function addDialogCloseBtnListeners(btn, dialog){
+    btn.addEventListener('click', event => {
+        event.preventDefault();
+        clearInputs();
+        dialog.close();
+    });
+}
 
-export { ToDoItemArr, submitNewTaskBtn, sortItemsByDueDate }
+addDialogCloseBtnListeners(closeNewTaskDialogBtn, newTaskDialog);
+addDialogCloseBtnListeners(closeEditDialogBtn, editDialog);
+
+export { ToDoItemArr, submitNewTaskBtn, sortItemsByDueDate, addEditSubmitBtnListener }

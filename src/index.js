@@ -1,5 +1,5 @@
 import './style.css';
-import { ToDoItemArr, sortItemsByDueDate, submitNewTaskBtn, editBtn } from './ToDoItemLogic';
+import { ToDoItemArr, sortItemsByDueDate, submitNewTaskBtn, editBtn, addEditSubmitBtnListener } from './ToDoItemLogic';
 
 const contentContainer = document.getElementById('content');
 
@@ -34,6 +34,7 @@ function CreateToDoItemCard(item){
     addExpandEventListener(detailsBtn, expandedContainer);
     addDeleteEventListener(deleteBtn, item);
     editBtnEventListener(editBtn, item);
+    addEditSubmitBtnListener(item);
     return container;
 };
 
@@ -97,3 +98,5 @@ function editBtnEventListener(btn, item){
 }
 
 PopulateList();
+
+export { clearItems, PopulateList }
