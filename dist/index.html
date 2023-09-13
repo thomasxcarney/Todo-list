@@ -8,20 +8,23 @@
 </head>
 <body>
     <div id='header'>
-        <h1>My To Do List</h1>
+        <h1>To Do List</h1>
         <button id="NewTaskBtn">Add a Task</button>
     </div>
     <div id="sidebar">
-        <h3 class="home" id="homeBtn">Home</h3>
+        <h2 id="projects-header">Projects</h2>
+        <h3 class="home" id="homeBtn">All</h3>
         <h4 class="work category">Work</h4>
         <h4 class="school category">School</h4>
     </div>
     <dialog id="newTaskDialog">
         <form method="dialog">
-            <label for="titleInput">Title</label>
-            <input id='titleInput' name='titleInput' type="text" />
-            <label for="desInput">Description</label>
-            <input id='desInput' name='desInput' type="text" />
+            <div class="dialog-container-1">
+                <label for="titleInput">Title</label>
+                <input id='titleInput' name='titleInput' type="text" />
+                <label for="desInput">Description</label>
+                <input id='desInput' name='desInput' type="text" />
+            </div>
             <label for="dueInput">Due Date</label>
             <input id='dueInput' name='dueInput' type="datetime-local" />
             <fieldset>
@@ -34,21 +37,25 @@
                 <input type="radio" id="high" name="priority" value="high priority" />
             </fieldset>
             <label for="categoryInput">Category</label>
-            <input type="text" name="category" list="category" id="categoryInput">
+            <input type="text" name="category" list="category" id="categoryInput" placeholder="Select an  existing project or create a new one">
             <datalist id="category">
                 <option value="Work">
                 <option value="School">
             </datalist>
+            <div class="dialog-button-container">
+                <button type="button" id="closeNewTaskDialogBtn">Cancel</button>
+                <button type="submit" id="submitNewTask">Submit</button>
+            </div>
         </form>
-        <button type="button" id="closeNewTaskDialogBtn">Cancel</button>
-        <button type="submit" id="submitNewTask">Submit</button>
     </dialog>
     <dialog id="editDialog">
         <form method="dialog">
-            <label for="titleInput">Title</label>
-            <input id='editTitleInput' name='titleInput' type="text" />
-            <label for="desInput">Description</label>
-            <input id='editDesInput' name='desInput' type="text" />
+            <div class="dialog-container-1">
+                <label for="titleInput">Title</label>
+                <input id='editTitleInput' name='titleInput' type="text" />
+                <label for="desInput">Description</label>
+                <input id='editDesInput' name='desInput' type="text" />
+            </div>
             <label for="dueInput">Due Date</label>
             <input id='editDueInput' name='dueInput' type="datetime-local" />
             <fieldset>
@@ -61,14 +68,16 @@
                 <input type="radio" id="editHigh" name="priority" value="high priority" />
             </fieldset>
             <label for="editCategoryInput">Category</label>
-            <input type="text" name="editCategory" list="category" id="editCategoryInput">
+            <input type="text" name="editCategory" list="category" id="editCategoryInput" placeholder="Select an  existing project or create a new one">
             <datalist id="editCategory">
                 <option value="Work">
                 <option value="School">
             </datalist>
+            <div class="dialog-button-container">
+                <button type="button" id="closeEditDialogBtn">Cancel</button>
+                <button type="submit" id="submitEditBtn">Submit</button>
+            </div>
         </form>
-        <button type="button" id="closeEditDialogBtn">Cancel</button>
-        <button type="submit" id="submitEditBtn">Submit</button>
     </dialog>
     <div id='content' class='content'>
     </div>  

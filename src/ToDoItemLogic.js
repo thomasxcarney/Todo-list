@@ -1,4 +1,5 @@
 import { clearItems, createNewCategory, PopulateList } from ".";
+import format from 'date-fns/format';
 
 const ToDoItemArr = [];
 
@@ -19,7 +20,9 @@ function sortItemsByDueDate() {
 };
 
 const item1 = ToDoItem('Go to work', 'I have to go to work :(', '2023-09-07T17:12', 'high priority', 'work');
+const item2 = ToDoItem('Go to class', 'Be on time to class', '2023-09-11T08:00', 'normal priority', 'school');
 PushItemToArr(item1);
+PushItemToArr(item2);
 
 const NewTaskBtn = document.getElementById('NewTaskBtn');
 const newTaskDialog = document.getElementById('newTaskDialog');

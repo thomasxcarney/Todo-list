@@ -1,5 +1,7 @@
 import './style.css';
 import { ToDoItemArr, sortItemsByDueDate, submitNewTaskBtn, editBtn, addEditSubmitBtnListener } from './ToDoItemLogic';
+import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
 
 const contentContainer = document.getElementById('content');
 
@@ -12,10 +14,13 @@ function PopulateList() {
 function CreateToDoItemCard(item){
     let container = document.createElement('div');
     container.classList.add('to-do-item');
+    let checkbox = document.createElement('input');
+    checkbox.setAttribute('type', 'checkbox');
+    checkbox.classList.add('item-checkbox');
     let title = document.createElement('h4');
     title.innerHTML = item.title;
     let dueDate = document.createElement('p');
-    dueDate.innerHTML = item.dueDate;
+    dueDate.innerHTML = format(parseISO(item.dueDate), 'Pp');
     let priority = document.createElement('p');
     priority.innerHTML = item.priority;
     let detailsBtn = document.createElement('button');
@@ -32,11 +37,12 @@ function CreateToDoItemCard(item){
     editBtn.innerHTML = 'Edit';
     expandedContainer.append(description, category, deleteBtn, editBtn);
     expandedContainer.classList.add('hidden');
-    container.append(title, detailsBtn, dueDate, priority, expandedContainer);
+    container.append(checkbox, title, detailsBtn, dueDate, priority, expandedContainer);
     addExpandEventListener(detailsBtn, expandedContainer);
     addDeleteEventListener(deleteBtn, item);
     editBtnEventListener(editBtn, item);
     addEditSubmitBtnListener(item);
+    addCheckBoxEventListener(container, checkbox);
     return container;
 };
 
@@ -139,14 +145,22 @@ function newCategoryHTML(newCategory){
     sidebar.appendChild(newSidebarElement);
 };
 
+let categoryArray = ToDoItemArr.map(a => a.category);
+
 function createNewCategory(newCategory){
-    if(Object.hasOwn(categories, newCategory) == false){
+    if(!categoryArray.includes(newCategory.toLowerCase())){
         newCategoryHTML(newCategory);
         addCategoryEventListeners();
     };
 };
 
-console.log(typeof categories);
+function addCheckBoxEventListener(container, checkbox) {
+    checkbox.addEventListener('change', () => {
+        if(checkbox.checked){
+            container.classList.add('completed')
+        } else container.classList.remove('completed')
+    })
+};
 
 addCategoryEventListeners();
 PopulateList();
