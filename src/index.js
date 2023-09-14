@@ -6,14 +6,22 @@ import parseISO from 'date-fns/parseISO';
 const contentContainer = document.getElementById('content');
 
 function PopulateList() {
-    for(let i = 0; i < ToDoItemArr.length; i++){
-        contentContainer.appendChild(CreateToDoItemCard(ToDoItemArr[i]));
-    }
+    if(localStorage.getItem("ToDoItemArray") != null && compareStoredArr() == true) {
+        ToDoItemArr = returnArr();
+    } else {
+        for(let i = 0; i < ToDoItemArr.length; i++){
+            contentContainer.appendChild(CreateToDoItemCard(ToDoItemArr[i]));
+        }
+    };
+    localStorage.clear();
+    storeArr();
 };
 
 function CreateToDoItemCard(item){
     let container = document.createElement('div');
+    container.classList.add(ToDoItemArr.indexOf(item));
     container.classList.add('to-do-item');
+    container.classList.add(item.title.split(' '));
     let checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
     checkbox.classList.add('item-checkbox');
@@ -35,15 +43,31 @@ function CreateToDoItemCard(item){
     deleteBtn.innerHTML = 'Remove item';
     let editBtn = document.createElement('button');
     editBtn.innerHTML = 'Edit';
+    editBtn.classList.add(ToDoItemArr.indexOf(item));
+    deleteBtn.classList.add(ToDoItemArr.indexOf(item));
     expandedContainer.append(description, category, deleteBtn, editBtn);
     expandedContainer.classList.add('hidden');
     container.append(checkbox, title, detailsBtn, dueDate, priority, expandedContainer);
+    addPriorityClass(container, priority, item);
     addExpandEventListener(detailsBtn, expandedContainer);
-    addDeleteEventListener(deleteBtn, item);
-    editBtnEventListener(editBtn, item);
-    addEditSubmitBtnListener(item);
+    addDeleteEventListener(deleteBtn);
+    editBtnEventListener(editBtn);
     addCheckBoxEventListener(container, checkbox);
     return container;
+};
+
+function addPriorityClass(container, priorityElement, item) {
+    let priority = item.priority.toLowerCase();
+    if(priority == 'high priority'){
+        container.classList.add('high-priority');
+        priorityElement.classList.add('high-priority');
+    } else if (priority == 'normal priority') {
+        container.classList.add('normal-priority');
+        priorityElement.classList.add('normal-priority');
+    } else if (priority == 'low priority') {
+        container.classList.add('low-priority');
+        priorityElement.classList.add('low-priority');
+    };
 };
 
 function addExpandEventListener(btn, container) {
@@ -54,8 +78,7 @@ function addExpandEventListener(btn, container) {
     })
 };
 
-function removeItem(item) {
-    let index = ToDoItemArr.indexOf(item);
+function removeItem(index) {
     ToDoItemArr.splice(index, 1);
     clearItems();
     PopulateList();
@@ -63,7 +86,8 @@ function removeItem(item) {
 
 function addDeleteEventListener(btn, item){
     btn.addEventListener('click', () => {
-        removeItem(item)
+        let index = btn.classList[0];
+        removeItem(index)
     })
 };
 
@@ -85,9 +109,11 @@ function fillEditDialog(item){
     const lowPrioritySelect = document.getElementById('editLow');
     const normalPrioritySelect = document.getElementById('editNormal');
     const highPrioritySelect = document.getElementById('editHigh');
+    const categoryInput = document.getElementById('editCategoryInput');
     titleInput.value = item.title;
     descriptionInput.value = item.description;
     dueInput.value = item.dueDate;
+    categoryInput.value = item.category;
     const itemPriority = (item.priority).toLowerCase();
     if(itemPriority == highPrioritySelect.value){
         highPrioritySelect.checked = true;
@@ -98,10 +124,12 @@ function fillEditDialog(item){
     };
 }
 
-function editBtnEventListener(btn, item){
+function editBtnEventListener(btn){
     btn.addEventListener('click', () => {
+        let item = ToDoItemArr[btn.classList[0]];
         fillEditDialog(item);
         editDialog.showModal();
+        addEditSubmitBtnListener(item);
     })
 }
 
@@ -160,6 +188,26 @@ function addCheckBoxEventListener(container, checkbox) {
             container.classList.add('completed')
         } else container.classList.remove('completed')
     })
+};
+
+function convertItemToJson(item) {
+    return JSON.stringify(item);
+};
+
+function storeArr(){
+    localStorage.clear();
+    localStorage.setItem("ToDoItemArray", convertItemToJson(ToDoItemArr));
+}
+
+function returnArr(){
+    let returnedArr = localStorage.getItem("ToDoItemArray");
+    return JSON.parse(returnedArr);
+}
+
+function compareStoredArr() {
+    if(ToDoItemArr === returnArr()){
+        return true;
+    } else false;
 };
 
 addCategoryEventListeners();

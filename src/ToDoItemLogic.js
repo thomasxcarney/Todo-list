@@ -1,7 +1,7 @@
 import { clearItems, createNewCategory, PopulateList } from ".";
 import format from 'date-fns/format';
 
-const ToDoItemArr = [];
+let ToDoItemArr = [];
 
 const ToDoItem = (title, description, dueDate, priority, category) => {
     return { title, description, dueDate, priority, category }
@@ -65,14 +65,14 @@ function addEditSubmitBtnListener(item){
         editDialog.close();
         clearItems();
         PopulateList();
-    })
+    }, {once : true})
 };
 
 function getEditInputs() {
     let title = document.getElementById('editTitleInput').value;
     let description = document.getElementById('editDesInput').value;
     let dueDate = document.getElementById('editDueInput').value;
-    let category = document.getElementById('editCategory').value;
+    let category = document.getElementById('editCategoryInput').value;
     let priority;
     if(document.getElementById('editHigh').checked == true){
         priority = 'High priority';
@@ -81,7 +81,7 @@ function getEditInputs() {
     }else if(document.getElementById('editLow').checked == true) {
         priority = 'Low priority';
     };
-    return [title, description, dueDate, priority, category];
+   return [title, description, dueDate, priority, category];
 }
 
 function editItem(item, inputs){
@@ -90,7 +90,7 @@ function editItem(item, inputs){
     item.dueDate = inputs[2];
     item.priority = inputs[3];
     item.category = inputs[4];
-}
+};
 
 const closeNewTaskDialogBtn = document.getElementById('closeNewTaskDialogBtn');
 const closeEditDialogBtn = document.getElementById('closeEditDialogBtn');

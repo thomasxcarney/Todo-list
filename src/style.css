@@ -7,6 +7,7 @@
     --brown: #562C2C;
     --orange: #F2542D;
     --blue2: #002A32;
+    --shadow: 1px 2px 5px rgba(0, 0, 0, 0.386);
 }
 
 body {
@@ -26,7 +27,7 @@ body {
     background-color: var(--blue);
     text-align: center;
     padding: 20px;
-    box-shadow: 1px 2px 5px black;
+    box-shadow: var(--shadow);
     z-index: 1;
 }
 
@@ -50,7 +51,6 @@ body {
 
 .to-do-item {
     color: black;
-    background-color: var(--orange);
     padding: 10px;
     margin-bottom: 20px;
     display: grid;
@@ -58,7 +58,7 @@ body {
     justify-items: center;
     align-items: center;
     border-radius: 5px;
-    box-shadow: 1px 2px 5px black;
+    box-shadow: var(--shadow);
 }
 
 .hidden {
@@ -85,7 +85,7 @@ button {
     padding: 5px 10px;
     border: none;
     border-radius: 5px;
-    box-shadow: 1px 2px 5px black;
+    box-shadow: var(--shadow);
 }
 
 dialog {
@@ -134,4 +134,16 @@ input[type='radio'] {
 
 .completed {
     opacity: 0.2;
+}
+
+div.high-priority {
+    background-color: var(--orange);
+}
+
+div.normal-priority {
+    background-color: var(--brown);
+}
+
+div.low-priority {
+    background-color: var(--blue2);
 }
