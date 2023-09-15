@@ -55,6 +55,7 @@ body {
     margin-bottom: 20px;
     display: grid;
     grid-template-columns: min-content 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
     justify-items: center;
     align-items: center;
     border-radius: 5px;
@@ -146,4 +147,43 @@ div.normal-priority {
 
 div.low-priority {
     background-color: var(--blue2);
+}
+
+.visible {
+    margin-top: 20px;
+    width: 100%;
+    grid-column: 1 / 6;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    justify-items: center;
+    align-items: center;
+}
+
+.visible > .description {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.visible > .category {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.visible > button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: var(--shadow);
+}
+
+.visible > .edit {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: flex-end;
+}
+
+.visible > .delete {
+    grid-column: 4;
+    grid-row: 1;
 }

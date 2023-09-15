@@ -37,14 +37,18 @@ function CreateToDoItemCard(item){
     let expandedContainer = document.createElement('div');
     let description = document.createElement('p');
     description.innerHTML = item.description;
+    description.classList.add('description');
     let category = document.createElement('p');
     category.innerHTML = item.category;
+    category.classList.add('category');
     let deleteBtn = document.createElement('button');
     deleteBtn.innerHTML = 'Remove item';
     let editBtn = document.createElement('button');
     editBtn.innerHTML = 'Edit';
     editBtn.classList.add(ToDoItemArr.indexOf(item));
+    editBtn.classList.add('edit');
     deleteBtn.classList.add(ToDoItemArr.indexOf(item));
+    deleteBtn.classList.add('delete');
     expandedContainer.append(description, category, deleteBtn, editBtn);
     expandedContainer.classList.add('hidden');
     container.append(checkbox, title, detailsBtn, dueDate, priority, expandedContainer);
@@ -74,7 +78,11 @@ function addExpandEventListener(btn, container) {
     btn.addEventListener('click', () => {
         if(container.classList.contains('hidden')){
             container.classList.remove('hidden');
-        } else container.classList.add('hidden');
+            container.classList.add('visible');
+        } else {
+            container.classList.add('hidden');
+            container.classList.remove('visible');
+        }
     })
 };
 
